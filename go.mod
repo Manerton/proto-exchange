@@ -1,4 +1,5 @@
-module main
+module github.com/Manerton/proto-exchange
+
 
 go 1.23.2
 
