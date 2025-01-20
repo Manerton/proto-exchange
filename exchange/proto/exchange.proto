@@ -4,6 +4,8 @@ package exchange;
 
 option go_package = "github.com/proto-exchange/exchange_grpc";
 
+import "validate/validate.proto";
+
 service ExchangeService {
     rpc GetExchangeAllRates(EmptyMSG) returns (ExchangeAllResponse);
 
@@ -15,17 +17,16 @@ message ExchangeAllResponse {
     map<string, float> rates = 1; 
 }
 
+message EmptyMSG {}
+
 
 message ExchangeRequest {
-    string fromCurrency = 1;
-    string toCurrency = 2;
+    string fromCurrency = 1 [(validate.rules).string.min_len = 3];
+    string toCurrency = 2[(validate.rules).string.min_len = 3];
 }
 
 message ExchangeOneResponse {
-    string fromCurrency = 1;
-    string toCurrency = 2;
-    float rate = 3;
+    string fromCurrency = 1 [(validate.rules).string.min_len = 3];
+    string toCurrency = 2 [(validate.rules).string.min_len = 3];
+    float rate = 3[(validate.rules).float.gt = 0];
 }
-
-
-message EmptyMSG {}
